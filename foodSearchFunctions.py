@@ -27,7 +27,8 @@ def SerpAPISearchImage(img_url):
     params = {
         "engine": "google_reverse_image",
         "image_url": img_url,
-        "api_key": secrets.SERPAPI_TOKEN
+        "api_key": secrets.SERPAPI_TOKEN,
+        "hl": "en",
     }
 
     search = GoogleSearch(params)
@@ -46,9 +47,15 @@ def GetIngredientsAndInstructions(searchFood):
     print(json)
 
     title = json['meals'][0]['strMeal']
-    instructions = json['meals'][0]['strInstructions']
+    instructions_strings = json['meals'][0]['strInstructions'].strip().split('.')
+    instructions = []
     ingredients = []
     ingredients_amounts = []
+
+    print(instructions_strings)
+
+    for line in instructions_strings:
+        instructions.append(line.strip() + ".")
 
     for i in range(1, 21):
         ingredient = "strIngredient" + str(i)
@@ -56,14 +63,55 @@ def GetIngredientsAndInstructions(searchFood):
 
         if json['meals'][0][ingredient] != None and json['meals'][0][ingredient] != "":
             ingredients.append(json['meals'][0][ingredient])
-            ingredients_amounts.append((json['meals'][0][measure], json['meals'][0][ingredient]))
+            ingredients_amounts.append(json['meals'][0][measure] + " " + json['meals'][0][ingredient])
         else:
             break
 
     return [title, instructions, ingredients, ingredients_amounts]
 
+
+def ConvertToMessages(parsed_recipe):
+    messages = []
+
+    heading = "Dish: " + parsed_recipe[0] + "\n" + "Instructions: \n"
+    messages.append(heading)
+
+    ingredients_message = "Ingredients:\n"
+
+    ingredients_list = parsed_recipe[3]
+    for ingredient in ingredients_list:
+        ingredients_message += ingredient + "\n"
+
+    messages.append(ingredients_message)
+
+    instructions = parsed_recipe[1]
+    total_length = 0
+    new_message = ""
+
+    for line in instructions:
+        if (total_length + len(line) + 1) < 300:
+            new_message += line + "\n"
+            total_length += len(line) + 1
+        else:
+            messages.append(new_message)
+            total_length = len(line) + 1
+            new_message = line + "\n"
+
+    messages.append(new_message)
+
+
+    return messages
+
+
 ## Example usage
 image_url = uploadImage("Spaghetti-Bolognese.jpg")
 results_query = SerpAPISearchImage(image_url)
 parsed_recipe = GetIngredientsAndInstructions(results_query)
+messages = ConvertToMessages(parsed_recipe)
+
 print(parsed_recipe)
+print('\n')
+
+for message in messages:
+    print(message)
+    print("\n")
