@@ -9,7 +9,7 @@ def uploadImage(img_path):
     with open(img_path, "rb") as file:
         url = "https://api.imgbb.com/1/upload"
         payload = {
-            "key": secrets.IMGDB_API_KEY,
+            "key": secrets.IMGBB_API_KEY,
             "expiration": 120,
             "image": base64.b64encode(file.read()),
         }
@@ -27,15 +27,15 @@ def SerpAPISearchImage(img_url):
     params = {
         "engine": "google_reverse_image",
         "image_url": img_url,
-        "api_key": secrets.SERPAPI_TOKEN,
+        "api_key": secrets.SERPAPI_API_KEY,
         "hl": "en",
     }
 
     search = GoogleSearch(params)
     results = search.get_dict()
-    print(results)
-    print(results["search_information"])
-    print(results["search_information"]['query_displayed'])
+    #print(results)
+    #print(results["search_information"])
+    #print(results["search_information"]['query_displayed'])
     return results["search_information"]['query_displayed']
 
 
@@ -52,7 +52,7 @@ def GetIngredientsAndInstructions(searchFood):
     ingredients = []
     ingredients_amounts = []
 
-    print(instructions_strings)
+    #print(instructions_strings)
 
     for line in instructions_strings:
         instructions.append(line.strip() + ".")
@@ -71,7 +71,7 @@ def GetIngredientsAndInstructions(searchFood):
 
 
 def ConvertToMessages(parsed_recipe):
-    messages = []
+    messages = ''
 
     heading = "Dish: " + parsed_recipe[0] + "\n"
 
@@ -81,7 +81,7 @@ def ConvertToMessages(parsed_recipe):
     for ingredient in ingredients_list:
         ingredients_message += ingredient + "\n"
 
-    messages.append(ingredients_message)
+    messages += ingredients_message + "\n"
 
     instructions = parsed_recipe[1]
     new_message = "Instructions:\n"
@@ -93,25 +93,23 @@ def ConvertToMessages(parsed_recipe):
             new_message += line + "\n"
             total_length += len(line) + 1
         else:
-            messages.append(new_message)
+            messages += new_message
             total_length = len(line) + 1
             new_message = line + "\n"
 
-    messages.append(new_message)
+    messages += new_message
 
 
     return messages
 
 
 ## Example usage
-image_url = uploadImage("Spaghetti-Bolognese.jpg")
-results_query = SerpAPISearchImage(image_url)
-parsed_recipe = GetIngredientsAndInstructions(results_query)
-messages = ConvertToMessages(parsed_recipe)
-
-print(parsed_recipe)
-print('\n')
-
-for message in messages:
-    print(message)
-    print("\n")
+# image_url = uploadImage("images/Spaghetti-Bolognese.jpg")
+# results_query = SerpAPISearchImage(image_url)
+# parsed_recipe = GetIngredientsAndInstructions(results_query)
+# messages = ConvertToMessages(parsed_recipe)
+#
+# #print(parsed_recipe)
+# #print('\n')
+#
+# print(messages)
