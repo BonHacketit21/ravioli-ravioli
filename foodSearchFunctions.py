@@ -73,7 +73,7 @@ def GetIngredientsAndInstructions(searchFood):
 def ConvertToMessages(parsed_recipe):
     messages = []
 
-    heading = "Dish: " + parsed_recipe[0] + "\n" + "Instructions: \n"
+    heading = "Dish: " + parsed_recipe[0] + "\n"
     messages.append(heading)
 
     ingredients_message = "Ingredients:\n"
@@ -85,8 +85,9 @@ def ConvertToMessages(parsed_recipe):
     messages.append(ingredients_message)
 
     instructions = parsed_recipe[1]
-    total_length = 0
-    new_message = ""
+    new_message = "Instructions:\n"
+    total_length = len(new_message)
+
 
     for line in instructions:
         if (total_length + len(line) + 1) < 300:
