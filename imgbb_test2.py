@@ -12,3 +12,5 @@ with open("shieldingSlime.png", "rb") as file:
 
     print(res)
     print(res.json())
+    json = res.json()
+    print(json['data']['url'])
