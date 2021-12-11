@@ -74,9 +74,8 @@ def ConvertToMessages(parsed_recipe):
     messages = []
 
     heading = "Dish: " + parsed_recipe[0] + "\n"
-    messages.append(heading)
 
-    ingredients_message = "Ingredients:\n"
+    ingredients_message = heading + "Ingredients:\n"
 
     ingredients_list = parsed_recipe[3]
     for ingredient in ingredients_list:
@@ -90,7 +89,7 @@ def ConvertToMessages(parsed_recipe):
 
 
     for line in instructions:
-        if (total_length + len(line) + 1) < 300:
+        if (total_length + len(line) + 1) < 700:
             new_message += line + "\n"
             total_length += len(line) + 1
         else:
