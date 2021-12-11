@@ -1,3 +1,4 @@
+# This code does not work, ignore
 
 import base64
 import secrets
@@ -11,7 +12,7 @@ print(encoded_string)
 import requests
 
 # defining the api-endpoint
-API_ENDPOINT = "https://api.imgbb.com/1/upload" + "?" +
+API_ENDPOINT = "https://api.imgbb.com/1/upload"
 
 # your API key here
 API_KEY = secrets.IMGDB_API_KEY
