@@ -4,8 +4,6 @@ import pickle
 
 import json
 
-
-
 params = {
   "engine": "google_reverse_image",
   "image_url": "https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/exps41527_CS143613B11_11_8b.jpg",

@@ -56,12 +56,14 @@ def GetIngredientsAndInstructions(searchFood):
 
         if json['meals'][0][ingredient] != None and json['meals'][0][ingredient] != "":
             ingredients.append(json['meals'][0][ingredient])
-            ingredients_amounts.append((json['meals'][0][ingredient], json['meals'][0][measure]))
+            ingredients_amounts.append((json['meals'][0][measure], json['meals'][0][ingredient]))
         else:
             break
 
     return [title, instructions, ingredients, ingredients_amounts]
 
+## Example usage
 image_url = uploadImage("Spaghetti-Bolognese.jpg")
 results_query = SerpAPISearchImage(image_url)
 parsed_recipe = GetIngredientsAndInstructions(results_query)
+print(parsed_recipe)
