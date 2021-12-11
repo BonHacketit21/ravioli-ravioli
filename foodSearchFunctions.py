@@ -66,8 +66,8 @@ def GetIngredientsAndInstructions(searchFood):
             ingredients_amounts.append(json['meals'][0][measure] + " " + json['meals'][0][ingredient])
         else:
             break
-
-    return [title, instructions, ingredients, ingredients_amounts]
+    youtube = json['meals'][0]['strYoutube']
+    return [title, instructions, ingredients, ingredients_amounts, youtube]
 
 
 def ConvertToMessages(parsed_recipe):
@@ -79,6 +79,7 @@ def ConvertToMessages(parsed_recipe):
 
     ingredients_list = parsed_recipe[3]
     for ingredient in ingredients_list:
+        # ingredients_message += ingredient + " ~ " + getPriceForItem(ingredient) + "\n"
         ingredients_message += ingredient + "\n"
 
     messages += ingredients_message + "\n"
@@ -99,17 +100,33 @@ def ConvertToMessages(parsed_recipe):
 
     messages += new_message
 
+    messages += "\n" + parsed_recipe[4]
 
     return messages
 
+def getPriceForItem(item_name):
+    params = {
+        "q": item_name,
+        "tbm": "shop",
+        "location": "Singapore",
+        "hl": "en",
+        "gl": "us",
+        "api_key": secrets.SERPAPI_API_KEY
+    }
+
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    price = results['shopping_results'][0]['price']
+
+    return price
 
 ## Example usage
-# image_url = uploadImage("images/Spaghetti-Bolognese.jpg")
-# results_query = SerpAPISearchImage(image_url)
-# parsed_recipe = GetIngredientsAndInstructions(results_query)
-# messages = ConvertToMessages(parsed_recipe)
-#
-# #print(parsed_recipe)
-# #print('\n')
-#
-# print(messages)
+image_url = uploadImage("images/Spaghetti-Bolognese.jpg")
+results_query = SerpAPISearchImage(image_url)
+parsed_recipe = GetIngredientsAndInstructions(results_query)
+messages = ConvertToMessages(parsed_recipe)
+
+#print(parsed_recipe)
+#print('\n')
+
+print(messages)
