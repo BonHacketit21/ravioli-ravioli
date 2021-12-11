@@ -8,7 +8,7 @@ import json
 
 params = {
   "engine": "google_reverse_image",
-  "image_url": "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80",
+  "image_url": "https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/exps41527_CS143613B11_11_8b.jpg",
   "api_key": secrets.SERPAPI_TOKEN
 }
 
