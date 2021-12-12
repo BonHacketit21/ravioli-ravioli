@@ -73,9 +73,9 @@ def GetIngredientsAndInstructions(searchFood):
 def ConvertToMessages(parsed_recipe):
     messages = ''
 
-    heading = "Dish: " + parsed_recipe[0] + "\n"
+    heading = f"*Dish: + {parsed_recipe[0]}* + \n"
 
-    ingredients_message = heading + "Ingredients:\n"
+    ingredients_message = heading + "*Ingredients:*\n"
 
     ingredients_list = parsed_recipe[3]
     for ingredient in ingredients_list:
@@ -85,7 +85,7 @@ def ConvertToMessages(parsed_recipe):
     messages += ingredients_message + "\n"
 
     instructions = parsed_recipe[1]
-    new_message = "Instructions:\n"
+    new_message = "*Instructions:*\n"
     total_length = len(new_message)
 
 
@@ -100,7 +100,7 @@ def ConvertToMessages(parsed_recipe):
 
     messages += new_message
 
-    messages += "\n" + parsed_recipe[4]
+    messages += parsed_recipe[4]
 
     return messages
 
@@ -121,7 +121,7 @@ def getPriceForItem(item_name):
     return price
 
 ## Example usage
-image_url = uploadImage("images/Spaghetti-Bolognese.jpg")
+image_url = uploadImage("images/Pancake-Recipe-2-1200.jpg")
 results_query = SerpAPISearchImage(image_url)
 parsed_recipe = GetIngredientsAndInstructions(results_query)
 messages = ConvertToMessages(parsed_recipe)
