@@ -121,8 +121,9 @@ def getPriceForItem(item_name):
     return price
 
 ## Example usage
-image_url = uploadImage("images/Spaghetti-Bolognese.jpg")
+image_url = uploadImage("images/carrot cake.jpg")
 results_query = SerpAPISearchImage(image_url)
+print(results_query)
 parsed_recipe = GetIngredientsAndInstructions(results_query)
 messages = ConvertToMessages(parsed_recipe)
 
